@@ -1,4 +1,6 @@
-from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.metrics import fbeta_score, precision_score, recall_score, make_scorer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
 
 
 # Optional: implement hyperparameter tuning.
@@ -17,8 +19,20 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
+    parameters = {
+        'n_estimators': [50, 100, 200, 500],
+        'max_depth': [5, 10],
+        'min_samples_split': [2, 5, 10, 20, 50, 100],
+    }
+    f1_metric = make_scorer(fbeta_score, beta=1, zero_division=1)
 
-    pass
+    clf = GridSearchCV(RandomForestClassifier(), param_grid=parameters, cv=3,
+                       n_jobs=-1,
+                       verbose=5,
+                       refit=True,
+                       scoring=f1_metric)
+    clf = clf.fit(X_train, y_train)
+    return clf
 
 
 def compute_model_metrics(y, preds):
@@ -57,4 +71,4 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)
