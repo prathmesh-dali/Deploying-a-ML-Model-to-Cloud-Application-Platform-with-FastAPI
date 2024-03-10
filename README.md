@@ -31,8 +31,11 @@ The metric on test data and model optimized hyperparams [here](./result.txt)
 ### POST example FastAPI doc
 ![](screenshots/example.png)
 
-### Continuous Deployment Enabled
+### Continuous Deployment
 ![](screenshots/continuous_deloyment.png)
+
+### Auto Deploy enabled
+![](screenshots/auto_deploy.png)
 
 ### Continuous Integration using Github Actions
 ![](screenshots/continuous_integration.png)
