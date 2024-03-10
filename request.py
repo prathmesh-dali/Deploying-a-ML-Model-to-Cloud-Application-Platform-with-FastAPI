@@ -25,7 +25,7 @@ data = json.dumps({
     "native_country": "United-States"})
 
 res = requests.post(
-    "http://app-url.onrender.com/predict",
+    "https://deploying-a-ml-model-to-cloud.onrender.com/predict",
     data=data,
     timeout=50)
 
