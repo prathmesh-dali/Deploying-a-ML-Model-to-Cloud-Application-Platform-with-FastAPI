@@ -7,3 +7,4 @@ requests
 fastapi==0.109.2
 uvicorn
 gunicorn
+httpx
