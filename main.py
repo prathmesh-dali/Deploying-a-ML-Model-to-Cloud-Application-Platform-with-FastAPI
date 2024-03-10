@@ -79,7 +79,7 @@ async def root():
     """
     This api on get call at root returns welcome string
     """
-    return "Welcome to the app"
+    return "Welcome to the app."
 
 file_dir = os.path.dirname(__file__)
 
