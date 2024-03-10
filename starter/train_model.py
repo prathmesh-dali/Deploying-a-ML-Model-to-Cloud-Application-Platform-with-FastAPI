@@ -6,8 +6,10 @@ import pandas as pd
 from ml.data import process_data
 from ml.model import train_model, compute_model_metrics, inference
 import pickle
+import os
 
-file = "../data/cleaned_data.csv"
+file_dir = os.path.dirname(__file__)
+file = os.path.join(file_dir, "../data/cleaned_data.csv")
 # Add code to load in the data.
 data = pd.read_csv(file)
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
@@ -42,11 +44,11 @@ result = {"Precision" : precision, "Recall": recall, "Fbeta": fbeta}
 print(result)
 print(model.best_params_)
 
-pickle.dump(model, open("../model/model.pkl","wb"))
-pickle.dump(encoder, open("../model/encoder.pkl","wb"))
-pickle.dump(lb, open("../model/binarizer.pkl","wb"))
+pickle.dump(model, open(os.path.join(file_dir, "../model/model.pkl"),"wb"))
+pickle.dump(encoder, open(os.path.join(file_dir, "../model/encoder.pkl"),"wb"))
+pickle.dump(lb, open(os.path.join(file_dir, "../model/binarizer.pkl"),"wb"))
 
-with open('result.txt', 'w') as f:
+with open(os.path.join(file_dir, '../result.txt'), 'w') as f:
     f.write(f"{model.best_params_}")
     f.write("\n")
     f.write(f"{result}")

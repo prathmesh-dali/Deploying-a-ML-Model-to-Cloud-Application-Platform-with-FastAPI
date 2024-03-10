@@ -37,8 +37,9 @@ if __name__ == "__main__":
         "sex",
         "native-country",
     ]
-
-    file = "./data/cleaned_data.csv"
+    
+    file_dir = os.path.dirname(__file__)
+    file = os.path.join(file_dir, "./data/cleaned_data.csv")
     data = pd.read_csv(file)
 
     file_dir = os.path.dirname(__file__)

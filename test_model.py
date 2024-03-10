@@ -17,7 +17,8 @@ use the return of data() as an argument
 @pytest.fixture(scope="module")
 def data():
     # code to load in the data.
-    datapath = "./data/cleaned_data.csv"
+    file_dir = os.path.dirname(__file__)
+    datapath = os.path.join(file_dir, "./data/cleaned_data.csv")
     return pd.read_csv(datapath)
 
 

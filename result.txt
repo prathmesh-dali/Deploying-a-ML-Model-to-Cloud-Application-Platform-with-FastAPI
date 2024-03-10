@@ -1,0 +1,2 @@
+{'max_depth': 10, 'min_samples_split': 5, 'n_estimators': 100}
+{'Precision': 0.766016713091922, 'Recall': 0.5399214659685864, 'Fbeta': 0.6333973128598848}
