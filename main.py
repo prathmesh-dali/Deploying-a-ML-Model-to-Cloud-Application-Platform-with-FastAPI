@@ -1,13 +1,22 @@
-# Put the code for your API here.
-from fastapi import FastAPI
-from pydantic import BaseModel
+"""
+Code to expose api for model
+author: Prathmesh Dali
+Date: March 2024
+"""
+
 import pickle
 import os
+from fastapi import FastAPI
+from pydantic import BaseModel
 import pandas as pd
 from starter.ml.data import process_data
 from starter.ml.model import inference
 
+
 class InputData(BaseModel):
+    """
+    This class creates type hint for api
+    """
     age: int
     workclass: str
     fnlgt: int
@@ -23,55 +32,64 @@ class InputData(BaseModel):
     hours_per_week: int
     native_country: str
 
-    model_config ={ "json_schema_extra" :{
-            "examples": [
-                {
-                    "age": 39,
-                    "workclass": "State-gov",
-                    "fnlgt": 77516,
-                    "education": "Bachelors",
-                    "education_num": 13,
+    model_config = {"json_schema_extra": {
+        "examples": [
+            {
+                "age": 47,
+                    "workclass": "Self-emp-not-inc",
+                    "fnlgt": 149116,
+                    "education": "Masters",
+                    "education_num": 14,
                     "marital_status": "Never-married",
-                    "occupation": "Adm-clerical",
+                    "occupation": "Prof-specialty",
                     "relationship": "Not-in-family",
                     "race": "White",
-                    "sex": "Male",
-                    "capital_gain": 2174,
+                    "sex": "Female",
+                    "capital_gain": 0,
                     "capital_loss": 0,
-                    "hours_per_week": 40,
+                    "hours_per_week": 50,
                     "native_country": "United-States"
                     },
-                {
-                    'age':28,
-                    'workclass':"Private", 
-                    'fnlgt':338409,
-                    'education':"Bachelors",
-                    'education_num':13,
-                    'marital_status':"Married-civ-spouse",
-                    'occupation':"Prof-specialty",
-                    'relationship':"Wife",
-                    'race':"Black",
-                    'sex':"Female",
-                    'capital_gain':0,
-                    'capital_loss':0,
-                    'hours_per_week':40,
-                    'native_country':"Cuba"
-                    }
-                ]
-            }}
+
+            {
+                'age': 30,
+                'workclass': "State-gov",
+                'fnlgt': 141297,
+                'education': "Bachelors",
+                'education_num': 13,
+                'marital_status': "Married-civ-spouse",
+                'occupation': "Prof-specialty",
+                'relationship': "Husband",
+                'race': "Asian-Pac-Islander",
+                'sex': "Male",
+                'capital_gain': 0,
+                'capital_loss': 0,
+                'hours_per_week': 40,
+                'native_country': "India"
+            }
+        ]
+    }}
+
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
+    """
+    This api on get call at root returns welcome string
+    """
     return "Welcome to the app"
 
 file_dir = os.path.dirname(__file__)
 
 
-model = pickle.load(open(os.path.join(file_dir,"model/model.pkl"), "rb"))
-encoder = pickle.load(open(os.path.join(file_dir,"model/encoder.pkl"), "rb"))
-binarizer = pickle.load(open(os.path.join(file_dir,"model/binarizer.pkl"), "rb"))
+with open(os.path.join(file_dir, "model/model.pkl"), "rb") as model_file:
+    model = pickle.load(model_file)
+with open(os.path.join(file_dir, "model/encoder.pkl"), "rb") as encoder_file:
+    encoder = pickle.load(encoder_file)
+with open(os.path.join(file_dir, "model/binarizer.pkl"), "rb") as lb_file:
+    binarizer = pickle.load(lb_file)
 
 cat_features = [
     "workclass",
@@ -84,10 +102,15 @@ cat_features = [
     "native-country",
 ]
 
+
 @app.post("/predict")
 async def predict(data: InputData):
-    data = pd.DataFrame(data.__dict__,[0])
+    """
+    This api returns the prediction of model on given input through post call.
+    """
+    data = pd.DataFrame(data.__dict__, [0])
     data.columns = [c.replace("_", "-") for c in data.columns]
-    data, *_  = process_data(data, categorical_features=cat_features, training=False, encoder=encoder, lb=binarizer)
+    data, *_ = process_data(data, categorical_features=cat_features,
+                            training=False, encoder=encoder, lb=binarizer)
     pred = inference(model, data)
     return binarizer.inverse_transform(pred)[0]

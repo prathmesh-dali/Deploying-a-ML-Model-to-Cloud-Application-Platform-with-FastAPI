@@ -1,23 +1,33 @@
-import requests
+"""
+Sample request for post call
+author: Prathmesh Dali
+Date: March 2024
+"""
+
 import json
+import requests
+
 
 data = json.dumps({
-        "age": 39,
-        "workclass": "State-gov",
-        "fnlgt": 77516,
-        "education": "Bachelors",
-        "education_num": 13,
-        "marital_status": "Never-married",
-        "occupation": "Adm-clerical",
-        "relationship": "Not-in-family",
-        "race": "White",
-        "sex": "Male",
-        "capital_gain": 2174,
-        "capital_loss": 0,
-        "hours_per_week": 40,
-        "native_country": "United-States"})
+    "age": 27,
+    "workclass": "Private",
+    "fnlgt": 428030,
+    "education": "Bachelors",
+    "education_num": 13,
+    "marital_status": "Never-married",
+    "occupation": "Craft-repair",
+    "relationship": "Not-in-family",
+    "race": "White",
+    "sex": "Male",
+    "capital_gain": 0,
+    "capital_loss": 0,
+    "hours_per_week": 50,
+    "native_country": "United-States"})
 
-res = requests.post("https://app-url.onrender.com/predict", data=data)
+res = requests.post(
+    "http://app-url.onrender.com/predict",
+    data=data,
+    timeout=50)
 
-print("status_code",res.status_code)
-print("result",res.json())
+print("status_code", res.status_code)
+print("result", res.json())
