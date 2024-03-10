@@ -1,5 +1,7 @@
 # Deploying a ML Model to Cloud Application Platform with FastAPI
 
+[Repository](https://github.com/prathmesh-dali/Deploying-a-ML-Model-to-Cloud-Application-Platform-with-FastAPI)
+
 In this project, the classifiacation model is trained using publicly available Census Bureau data. The model is deployed using FastAPI and tests are added to monitor API and model. The model validation and API tests are incorporated into CI/CD using Github Action. The API are deployed on Cloud Application Platform Render [here](https://deploying-a-ml-model-to-cloud.onrender.com/). 
 
 The project follows these steps:
@@ -21,32 +23,25 @@ Model metric on slices of categorical features [here](./slice_output.txt)
 The metric on test data and model optimized hyperparams [here](./result.txt)
 
 ### GET API response
-[](screenshots/live_get.png)
+![](screenshots/live_get.png)
 
 ### POST API response using script
-[](screenshots/live_post.png)
+![](screenshots/live_post.png)
 
 ### POST example FastAPI doc
-[](screenshots/example.png)
+![](screenshots/example.png)
 
 ### Continuous Deployment Enabled
-[](screenshots/continuous_deloyment.png)
+![](screenshots/continuous_deloyment.png)
 
 ### Continuous Integration using Github Actions
-[](screenshots/continuous_integration.png)
+![](screenshots/continuous_integration.png)
 
 ### Pytest result on CI
-[](screenshots/continuous_integration_pytest.png)
+![](screenshots/continuous_integration_pytest.png)
 
 #
 # Existing Readme
-
-
-
-
-
-
-
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
